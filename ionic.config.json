@@ -1,0 +1,8 @@
+{
+  "name": "Coffee Clicker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "36d0c5b6"
+}
