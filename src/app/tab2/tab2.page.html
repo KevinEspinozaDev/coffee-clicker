@@ -13,5 +13,30 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div id="container">
+
+    <!-- show counter -->
+    <div>
+      <ion-text
+      color="success">
+        <h3 [style]="showMessageCoffeesNews() ? 'opacity: 1;' : 'opacity: 0;'">
+          +{{ coffeesNews() }}
+        </h3>
+      </ion-text>
+
+      <ion-text>
+        <h1>
+          {{ counter }} Coffees
+        </h1>
+      </ion-text>
+
+      <ion-button size="large" fill="clear" shape="round" color="success"
+      (click)="increment()"
+      >
+        <ion-icon slot="icon-only" ios="cafe-outline" md="cafe-outline"></ion-icon>
+      </ion-button>
+
+    </div>
+
+  </div>
 </ion-content>
