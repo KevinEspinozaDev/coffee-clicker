@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -8,6 +9,16 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  storageService = inject(StorageService);
+  historyCounter = this.storageService.getStorageFromKey(this.storageService.keyNameHistoryCounter);
+  historyCounter$ = this.storageService.historyCounter$;
+
+  constructor() {
+    effect(() => {
+      if (this.historyCounter$()) {
+        this.historyCounter = this.storageService.getStorageFromKey(this.storageService.keyNameHistoryCounter);
+      }
+    });
+  }
 
 }

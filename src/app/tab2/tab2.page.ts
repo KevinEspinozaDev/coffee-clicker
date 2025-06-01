@@ -12,27 +12,26 @@ export class Tab2Page {
   showMessageCoffeesNews = signal(false);
 
   coffeesNews = signal(0);
-  features = signal<Feature[]>([
-    {
-      name: 'Coffee',
-      description: 'Coffee',
-      price: 0,
-      increment: 1,
-    },
-  ]);
 
   storageService = inject(StorageService);
   counter = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
+  counter$ = this.storageService.counter$;
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      if (this.counter$()) {
+        this.counter = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
+      }
+    });
+  }
 
   increment() {
     this.showMessageCoffeesNews.set(true);
     const previousCounter: number = this.counter;
     let acumulator: number = 0;
 
-    this.features().forEach((feature) => {
-      acumulator += feature.increment;
+    this.storageService.getFeaturesBought().forEach((featureBought: any) => {
+      acumulator += featureBought.quantityBought;
     });
 
     const newCounter = previousCounter + acumulator;
@@ -44,7 +43,10 @@ export class Tab2Page {
 
     setTimeout(() => {
       this.showMessageCoffeesNews.set(false);
-    }, 300);
+    }, 200);
+
+    const previousHistoryCounter = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameHistoryCounter));
+    this.storageService.setHistoryCounter(previousHistoryCounter + (newCounter - previousCounter));
   }
 
   reset() {

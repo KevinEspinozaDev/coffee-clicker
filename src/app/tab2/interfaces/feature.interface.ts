@@ -5,3 +5,7 @@ export interface Feature {
   increment: number;
 }
 
+export interface FeatureBought {
+  name: string;
+  quantityBought: number;
+}
