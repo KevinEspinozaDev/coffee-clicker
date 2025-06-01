@@ -8,6 +8,7 @@ export class StorageService {
 
   counter$ = signal(0);
   historyCounter$ = signal<number>(0);
+
   keyNameCounter: string = 'counter';
   keyNameFeaturesBought: string = 'featuresBought';
   keyNameHistoryCounter: string = 'historyCounter';
@@ -15,9 +16,39 @@ export class StorageService {
   features$ = signal<Feature[]>([
     {
       name: 'Coffee',
-      price: 10,
+      price: 100,
       description: 'Adds +1 Coffee',
       increment: 1
+    },
+    {
+      name: 'Coffee Cup',
+      price: 300,
+      description: 'Adds +2 Coffee',
+      increment: 2
+    },
+    {
+      name: 'Coffee Jar',
+      price: 500,
+      description: 'Adds +3 Coffee',
+      increment: 3
+    },
+    {
+      name: 'Coffee Box',
+      price: 1000,
+      description: 'Adds +5 Coffee',
+      increment: 5
+    },
+    {
+      name: 'Coffee Bag',
+      price: 2500,
+      description: 'Adds +10 Coffee',
+      increment: 10
+    },
+    {
+      name: 'Coffee Machine',
+      price: 10000,
+      description: 'Adds +20 Coffee',
+      increment: 20
     }
   ]);
   featuresBought$ = signal<FeatureBought[]>([
@@ -37,11 +68,26 @@ export class StorageService {
     } else {
       featuresBought.push(feature);
     }
-    this.featuresBought$.set(featuresBought);
+    this.featuresBought$.set([...this.featuresBought$(), feature]);
     this.saveStorageFromKey(this.keyNameFeaturesBought, featuresBought);
   }
 
   getFeaturesBought() {
+
+    const featuresBought = this.getStorageFromKey(this.keyNameFeaturesBought);
+    if (featuresBought === '') {
+      this.saveStorageFromKey(this.keyNameFeaturesBought, [
+        {
+          name: 'Coffee',
+          quantityBought: 1
+        }
+      ]);
+      return [{
+        name: 'Coffee',
+        quantityBought: 1
+      }];
+    }
+
     return this.getStorageFromKey(this.keyNameFeaturesBought);
   }
 
@@ -75,6 +121,9 @@ export class StorageService {
   }
 
   getStorageFromKey(key: string) {
-    return JSON.parse(localStorage.getItem(key) || '0');
+    if (localStorage.getItem(key) === null) {
+      return '';
+    }
+    return JSON.parse(localStorage.getItem(key) || '');
   }
 }

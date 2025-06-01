@@ -48,12 +48,14 @@ export class Tab3Page {
 
   getQuantityBoughtOfFeature(feature: Feature) {
     const featureBought: any = this.storageService.getFeaturesBought();
-    if (featureBought === undefined) return 0;
+    if (featureBought === '') return 0;
 
     const featureBoughtFound = featureBought.find((f: FeatureBought) => f.name === feature.name);
 
     if (featureBoughtFound) {
       return featureBoughtFound.quantityBought;
+    } else {
+      return 0;
     }
   }
 }
