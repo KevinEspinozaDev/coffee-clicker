@@ -1,60 +1,67 @@
 import { Injectable, computed, signal, WritableSignal } from '@angular/core';
 import { Feature, FeatureBought } from '../tab2/interfaces/feature.interface';
-
+import { LifeFeature, LifeFeatureBought } from '../tab2/interfaces/life-feature.interface';
+import { FEATURES, FeaturesNamesEnum } from '../constants/features.const';
+import { LIFE_FEATURES } from '../constants/life-features.const';
 @Injectable({
   providedIn: 'root'
 })
-export class StorageService {
+export class StateService {
 
   counter$ = signal(0);
 
   historyCounter$ = signal<number>(0);
   historyFeaturesBought$ = signal<number>(1);
 
-  features$ = computed<Feature[]>(() => [
-    {
-      name: 'Coffee',
-      price: 100,
-      description: 'Adds +1 Coffee',
-      increment: 1
-    },
-    {
-      name: 'Coffee Cup',
-      price: 300,
-      description: 'Adds +2 Coffee',
-      increment: 2
-    },
-    {
-      name: 'Coffee Jar',
-      price: 500,
-      description: 'Adds +3 Coffee',
-      increment: 3
-    },
-    {
-      name: 'Coffee Box',
-      price: 1000,
-      description: 'Adds +5 Coffee',
-      increment: 5
-    },
-    {
-      name: 'Coffee Bag',
-      price: 2500,
-      description: 'Adds +10 Coffee',
-      increment: 10
-    },
-    {
-      name: 'Coffee Machine',
-      price: 10000,
-      description: 'Adds +20 Coffee',
-      increment: 20
-    }
-  ]);
-
+  features$ = computed<Feature[]>(() => FEATURES);
   featuresBought$ = signal<FeatureBought[]>([
     {
-      name: 'Coffee',
+      name: FeaturesNamesEnum.COFFEE,
       quantityBought: 1
     }
   ]);
+
+  lifeFeatures$ = computed<LifeFeature[]>(() => LIFE_FEATURES);
+  lifeFeaturesBought$ = signal<LifeFeatureBought[]>([]);
+
+  constructor() {}
+
+  // Getters and setters
+  getCounter() {
+    return this.counter$;
+  }
+  setCounter(value: number) {
+    this.counter$.set(value);
+  }
+
+  getHistoryCounter() {
+    return this.historyCounter$;
+  }
+  setHistoryCounter(value: number) {
+    this.historyCounter$.set(value);
+  }
+
+  getHistoryFeaturesBought() {
+    return this.historyFeaturesBought$;
+  }
+  setHistoryFeaturesBought(value: number) {
+    this.historyFeaturesBought$.set(value);
+  }
+
+  getFeatures() {
+    return this.features$;
+  }
+
+  getFeaturesBought() {
+    return this.featuresBought$();
+  }
+  setFeaturesBought(value: FeatureBought[]) {
+    this.featuresBought$.set(value);
+  }
+
+  getLifeFeatures() {
+    return this.lifeFeatures$;
+  }
+
 
 }

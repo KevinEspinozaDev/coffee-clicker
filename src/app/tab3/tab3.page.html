@@ -17,12 +17,12 @@
 
   <ion-card class="ion-text-center">
     <h1>
-      {{ coffees }} Coffees
+      {{ coffees() }} Coffees
     </h1>
   </ion-card>
 
   <!-- Card -->
-  @for (item of storageService.getFeatures(); track $index) {
+  @for (item of features(); track $index) {
     <ion-card>
       <ion-card-header>
         <ion-card-title>{{ item.name }}</ion-card-title>
@@ -37,7 +37,7 @@
         </ion-text>
 
         <ion-button
-        [disabled]="coffees < item.price"
+        [disabled]="coffees() < item.price"
         (click)="buyFeature(item)"
         >
           <ion-icon name="cart" color="light"></ion-icon>

@@ -1,7 +1,8 @@
 import { Component, effect, inject } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { Feature, FeatureBought } from '../tab2/interfaces/feature.interface';
-
+import { StateService } from '../services/state.service';
+import { KEY_NAMES } from '../constants/keynames.const';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -10,45 +11,48 @@ import { Feature, FeatureBought } from '../tab2/interfaces/feature.interface';
 })
 export class Tab3Page {
 
-  coffees = 0;
   storageService = inject(StorageService);
+  stateService = inject(StateService);
+  coffees = this.stateService.getCounter();
+
+  features = this.stateService.getFeatures();
 
   constructor() {
-    this.coffees = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
-
+    /*
     effect(() => {
-      if (this.storageService.getCounter()) {
+      if (this.coffees()) {
         this.coffees = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
       }
     });
+    */
   }
 
   buyFeature(feature: Feature) {
 
-    if (this.getQuantityBoughtOfFeature(feature) === 0) {
-      this.storageService.setFeaturesBought({
-        name: feature.name,
-        quantityBought: 1
-      });
-    } else {
-      this.storageService.setFeaturesBought({
-        name: feature.name,
-        quantityBought: this.getQuantityBoughtOfFeature(feature) + 1
-      });
-      this.storageService.saveStorageFromKey(
-        this.storageService.keyNameFeaturesBought,
-        this.storageService.getFeaturesBought()
-      );
+    const featureBought: FeatureBought = {
+      name: feature.name,
+      quantityBought: this.getQuantityBoughtOfFeature(feature) + 1
     }
 
-    this.coffees -= feature.price;
-    this.storageService.setCounter(this.coffees);
-    this.storageService.saveStorageFromKey(this.storageService.keyNameCounter, this.coffees);
+    if (this.getQuantityBoughtOfFeature(feature) === 0) {
+      this.stateService.setFeaturesBought([featureBought]);
+    } else {
+      this.stateService.setFeaturesBought([...this.stateService.getFeaturesBought(), featureBought]);
+    }
+
+    this.storageService.saveStorageFromKey(
+      KEY_NAMES.FEATURES_BOUGHT,
+      this.stateService.getFeaturesBought()
+    );
+
+
+    this.stateService.setCounter(this.coffees() - feature.price);
+    this.storageService.saveStorageFromKey(KEY_NAMES.COUNTER, this.coffees());
   }
 
   getQuantityBoughtOfFeature(feature: Feature) {
-    const featureBought: any = this.storageService.getFeaturesBought();
-    if (featureBought === '') return 0;
+    const featureBought: FeatureBought[] = this.stateService.getFeaturesBought();
+    if (featureBought.length === 0) return 0;
 
     const featureBoughtFound = featureBought.find((f: FeatureBought) => f.name === feature.name);
 

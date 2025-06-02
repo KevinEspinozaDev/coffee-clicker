@@ -1,7 +1,8 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Feature } from './interfaces/feature.interface';
 import { StorageService } from '../services/storage.service';
-
+import { StateService } from '../services/state.service';
+import { KEY_NAMES } from '../constants/keynames.const';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -14,35 +15,30 @@ export class Tab2Page {
   coffeesNews = signal(0);
 
   storageService = inject(StorageService);
-  counter = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
-  counter$ = this.storageService.counter$;
+  stateService = inject(StateService);
 
-  constructor() {
-    effect(() => {
-      if (this.counter$()) {
-        this.counter = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
-      }
-    });
-  }
+  counter = this.stateService.getCounter();
+
+  constructor() {}
 
   increment() {
     this.showMessageCoffeesNews.set(true);
-    const previousCounter: number = this.counter;
+    const previousCounter: number = this.counter();
     let acumulator: number = 0;
 
-    this.storageService.getFeaturesBought().forEach((featureBought: any) => {
+    this.stateService.getFeaturesBought().forEach((featureBought: any) => {
       acumulator += featureBought.quantityBought;
     });
 
     const newCounter = previousCounter + acumulator;
-    this.storageService.setCounter(newCounter);
-    this.storageService.saveStorageFromKey(this.storageService.keyNameCounter, newCounter);
-    this.counter = newCounter;
+    this.stateService.setCounter(newCounter);
+    this.storageService.saveStorageFromKey(KEY_NAMES.COUNTER, newCounter);
+    this.stateService.setCounter(newCounter);
 
     this.coffeesNews.set(newCounter - previousCounter);
 
-    const previousHistoryCounter = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameHistoryCounter));
-    this.storageService.setHistoryCounter(previousHistoryCounter + (newCounter - previousCounter));
+    const previousHistoryCounter = parseInt(this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER));
+    this.stateService.setHistoryCounter(previousHistoryCounter + (newCounter - previousCounter));
 
     setTimeout(() => {
       this.showMessageCoffeesNews.set(false);
@@ -50,7 +46,7 @@ export class Tab2Page {
   }
 
   reset() {
-    this.storageService.setCounter(0);
+    this.stateService.setCounter(0);
   }
 
 }
