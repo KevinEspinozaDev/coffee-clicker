@@ -40,7 +40,8 @@ export class Tab2Page {
     this.coffeesNews.set(newCounter - previousCounter);
 
     const previousHistoryCounter = parseInt(this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER));
-    this.stateService.setHistoryCounter(previousHistoryCounter + (newCounter - previousCounter));
+    this.stateService.setHistoryCounter(previousHistoryCounter + this.coffeesNews());
+    this.storageService.saveStorageFromKey(KEY_NAMES.HISTORY_COUNTER, this.stateService.getHistoryCounter()());
 
     setTimeout(() => {
       this.showMessageCoffeesNews.set(false);
