@@ -1,0 +1,52 @@
+<ion-content [fullscreen]="true">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        Life
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Shopping</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+    <!-- Content -->
+
+  <ion-card class="ion-text-center">
+    <h1>
+      {{ coffees() }} Coffees
+    </h1>
+  </ion-card>
+
+  <!-- Card -->
+  @for (item of lifeFeatures(); track $index) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ item.name }}</ion-card-title>
+        <ion-card-subtitle>{{ item.description }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-text>
+          <h1>
+            Aquired: {{ getQuantityBoughtOfFeature(item) === 0 ? 'No' : 'Yes' }}
+          </h1>
+        </ion-text>
+
+        @if (getQuantityBoughtOfFeature(item) === 0) {
+          <ion-button
+          [disabled]="coffees() < item.price"
+          (click)="buyFeature(item)"
+          >
+            <ion-icon name="cart" color="light"></ion-icon>
+            <ion-text color="light"> -{{ item.price }} Coffees</ion-text>
+          </ion-button>
+        }
+      </ion-card-content>
+    </ion-card>
+  }
+
+</ion-content>

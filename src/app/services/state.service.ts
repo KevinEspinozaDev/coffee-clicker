@@ -66,7 +66,7 @@ export class StateService {
   }
 
   getLifeFeaturesBought() {
-    return this.lifeFeaturesBought$;
+    return this.lifeFeaturesBought$();
   }
   setLifeFeaturesBought(value: LifeFeatureBought[]) {
     this.lifeFeaturesBought$.set(value);

@@ -41,7 +41,6 @@ export class Tab3Page {
         f.name === featureBought.name ? { ...f, quantityBought: featureBought.quantityBought } : f
       );
       this.stateService.setFeaturesBought(updated);
-      console.log(this.stateService.getFeaturesBought());
     }
 
     this.storageService.saveStorageFromKey(
