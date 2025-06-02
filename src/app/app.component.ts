@@ -39,6 +39,8 @@ export class AppComponent {
     // Stats
     if (this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER)) {
       this.stateService.setHistoryCounter(this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER));
+    } else {
+      this.storageService.saveStorageFromKey(KEY_NAMES.HISTORY_COUNTER, this.stateService.getCounter()());
     }
   }
 }

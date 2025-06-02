@@ -17,15 +17,7 @@ export class Tab3Page {
 
   features = this.stateService.getFeatures();
 
-  constructor() {
-    /*
-    effect(() => {
-      if (this.coffees()) {
-        this.coffees = parseInt(this.storageService.getStorageFromKey(this.storageService.keyNameCounter));
-      }
-    });
-    */
-  }
+  constructor() {}
 
   buyFeature(feature: Feature) {
 
