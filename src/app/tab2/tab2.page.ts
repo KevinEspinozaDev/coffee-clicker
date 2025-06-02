@@ -22,6 +22,7 @@ export class Tab2Page {
   constructor() {}
 
   increment() {
+
     this.showMessageCoffeesNews.set(true);
     const previousCounter: number = this.counter();
     let acumulator: number = 0;

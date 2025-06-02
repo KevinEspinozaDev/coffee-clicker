@@ -1,8 +1,10 @@
-import { Injectable, computed, signal, WritableSignal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Feature, FeatureBought } from '../tab2/interfaces/feature.interface';
 import { LifeFeature, LifeFeatureBought } from '../tab2/interfaces/life-feature.interface';
 import { FEATURES, FeaturesNamesEnum } from '../constants/features.const';
 import { LIFE_FEATURES } from '../constants/life-features.const';
+import { StorageService } from './storage.service';
+import { KEY_NAMES } from '../constants/keynames.const';
 @Injectable({
   providedIn: 'root'
 })
@@ -63,5 +65,11 @@ export class StateService {
     return this.lifeFeatures$;
   }
 
+  getLifeFeaturesBought() {
+    return this.lifeFeaturesBought$;
+  }
+  setLifeFeaturesBought(value: LifeFeatureBought[]) {
+    this.lifeFeaturesBought$.set(value);
+  }
 
 }
