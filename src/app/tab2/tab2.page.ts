@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { Feature } from './interfaces/feature.interface';
+import { Feature, FeatureBought } from './interfaces/feature.interface';
 import { StorageService } from '../services/storage.service';
 import { StateService } from '../services/state.service';
 import { KEY_NAMES } from '../constants/keynames.const';
@@ -27,9 +27,10 @@ export class Tab2Page {
     const previousCounter: number = this.counter();
     let acumulator: number = 0;
 
-    this.stateService.getFeaturesBought().forEach((featureBought: any) => {
-      acumulator += featureBought.quantityBought;
+    this.stateService.getFeaturesBought().forEach((featureBought: FeatureBought) => {
+      acumulator = acumulator + (this.extractIncrementFromFeatureBought(this.stateService.getFeatures()(), featureBought) * featureBought.quantityBought);
     });
+
 
     const newCounter = previousCounter + acumulator;
     this.stateService.setCounter(newCounter);
@@ -44,6 +45,11 @@ export class Tab2Page {
     setTimeout(() => {
       this.showMessageCoffeesNews.set(false);
     }, 200);
+  }
+
+  extractIncrementFromFeatureBought(features: Feature[], featureBought: FeatureBought) {
+    const feature = features.find((feature: Feature) => feature.name === featureBought.name);
+    return feature?.increment || 0;
   }
 
   reset() {

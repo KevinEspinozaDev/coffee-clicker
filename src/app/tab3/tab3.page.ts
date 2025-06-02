@@ -35,16 +35,19 @@ export class Tab3Page {
     }
 
     if (this.getQuantityBoughtOfFeature(feature) === 0) {
-      this.stateService.setFeaturesBought([featureBought]);
+      this.stateService.setFeaturesBought([ ...this.stateService.getFeaturesBought(), featureBought ]);
     } else {
-      this.stateService.setFeaturesBought([...this.stateService.getFeaturesBought(), featureBought]);
+      const updated = this.stateService.getFeaturesBought().map(f =>
+        f.name === featureBought.name ? { ...f, quantityBought: featureBought.quantityBought } : f
+      );
+      this.stateService.setFeaturesBought(updated);
+      console.log(this.stateService.getFeaturesBought());
     }
 
     this.storageService.saveStorageFromKey(
       KEY_NAMES.FEATURES_BOUGHT,
       this.stateService.getFeaturesBought()
     );
-
 
     this.stateService.setCounter(this.coffees() - feature.price);
     this.storageService.saveStorageFromKey(KEY_NAMES.COUNTER, this.coffees());
