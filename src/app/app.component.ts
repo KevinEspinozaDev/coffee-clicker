@@ -37,10 +37,11 @@ export class AppComponent {
     }
 
     // Stats
-    if (this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER)) {
-      this.stateService.setHistoryCounter(this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER));
-    } else {
+    if (!this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER)) {
       this.storageService.saveStorageFromKey(KEY_NAMES.HISTORY_COUNTER, this.stateService.getCounter()());
+    }
+    if (this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER)) {
+      this.stateService.setHistoryCounter(parseInt(this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_COUNTER)));
     }
   }
 }
