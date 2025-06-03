@@ -11,6 +11,6 @@ export class Tab1Page {
 
   stateService = inject(StateService);
   historyCounter = this.stateService.getHistoryCounter();
-
+  historyFeaturesBought = this.stateService.getHistoryFeaturesBought();
   constructor() {}
 }

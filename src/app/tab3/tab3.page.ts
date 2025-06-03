@@ -40,6 +40,15 @@ export class Tab3Page {
       this.stateService.getFeaturesBought()
     );
 
+    // Consulta por cada elemento en el quantityBought y lo sumas, incluso si está repetido, que se sumen todos los quantityBought
+    const counterHistoryFeaturesBought =
+    this.stateService.getFeaturesBought().reduce((acc, curr) => acc + curr.quantityBought, 0);
+
+    this.storageService.saveStorageFromKey(
+      KEY_NAMES.HISTORY_FEATURES_BOUGHT,
+      counterHistoryFeaturesBought
+    );
+
     this.stateService.setCounter(this.coffees() - feature.price);
     this.storageService.saveStorageFromKey(KEY_NAMES.COUNTER, this.coffees());
   }

@@ -27,15 +27,39 @@ export const FEATURES: Feature[] = [
   },
   {
     name: 'Coffee Box',
-    price: 5000,
+    price: 8000,
     description: 'Adds +10 Coffee',
     increment: 10
   },
   {
     name: 'Coffee Machine',
-    price: 15000,
+    price: 18000,
     description: 'Adds +20 Coffee',
     increment: 20
+  },
+  {
+    name: 'Automatic Coffee Machine',
+    price: 50000,
+    description: 'Adds +50 Coffee',
+    increment: 50
+  },
+  {
+    name: 'Little Coffee Shop',
+    price: 200000,
+    description: 'Adds +100 Coffee',
+    increment: 100
+  },
+  {
+    name: 'Coffee Shop',
+    price: 500000,
+    description: 'Adds +200 Coffee',
+    increment: 200
+  },
+  {
+    name: 'Great Coffee Shop',
+    price: 1000000,
+    description: 'Adds +500 Coffee',
+    increment: 500
   }
 ];
 
@@ -45,6 +69,10 @@ export enum FeaturesNamesEnum {
   COFFEE_JAR = 'Coffee Jar',
   COFFEE_BOX = 'Coffee Box',
   COFFEE_BAG = 'Coffee Bag',
-  COFFEE_MACHINE = 'Coffee Machine'
+  COFFEE_MACHINE = 'Coffee Machine',
+  AUTOMATIC_COFFEE_MACHINE = 'Automatic Coffee Machine',
+  LITTLE_COFFEE_SHOP = 'Little Coffee Shop',
+  COFFEE_SHOP = 'Coffee Shop',
+  GREAT_COFFEE_SHOP = 'Great Coffee Shop'
 }
 

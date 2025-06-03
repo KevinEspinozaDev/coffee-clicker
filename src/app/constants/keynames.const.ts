@@ -3,4 +3,5 @@ export enum KEY_NAMES {
   FEATURES_BOUGHT = 'featuresBought',
   HISTORY_COUNTER = 'historyCounter',
   LIFE_FEATURES_BOUGHT = 'lifeFeaturesBought',
+  HISTORY_FEATURES_BOUGHT = 'historyFeaturesBought'
 }

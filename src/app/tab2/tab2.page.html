@@ -16,7 +16,7 @@
   <div id="container">
 
     <!-- show counter -->
-    <div>
+    <div class="counter-spacing-bottom">
       <ion-text
       color="success">
         <h3 [style]="showMessageCoffeesNews() ? 'opacity: 1;' : 'opacity: 0;'">
@@ -24,8 +24,8 @@
         </h3>
       </ion-text>
 
-      <ion-text class="ion-margin-bottom">
-        <h1>
+      <ion-text class="ion-margin-bottom" wrap>
+        <h1 class="text-title-custom">
           {{ counter() }} Coffees
         </h1>
       </ion-text>

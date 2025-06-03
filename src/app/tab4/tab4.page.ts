@@ -26,7 +26,7 @@ export class Tab4Page {
 
     const featureBought: LifeFeatureBought = {
       name: feature.name,
-      quantityBought: this.getQuantityBoughtOfFeature(feature) + 1
+      quantityBought: this.getQuantityBoughtOfFeature(feature) + 1,
     }
 
     if (this.getQuantityBoughtOfFeature(feature) === 0) {
