@@ -51,6 +51,8 @@ export class AppComponent implements OnInit {
     if (!this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_FEATURES_BOUGHT)) {
       this.stateService.setHistoryFeaturesBought(this.stateService.getFeaturesBought().reduce((acc, curr) => acc + curr.quantityBought, 0));
       this.storageService.saveStorageFromKey(KEY_NAMES.HISTORY_FEATURES_BOUGHT, this.stateService.getHistoryFeaturesBought()());
+    } else {
+      this.stateService.setHistoryFeaturesBought(parseInt(this.storageService.getStorageFromKey(KEY_NAMES.HISTORY_FEATURES_BOUGHT)));
     }
   }
 
